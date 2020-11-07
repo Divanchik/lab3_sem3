@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/dimadivan/lab3_sem3/build",
+  "command": "/bin/g++-9    -g   -o CMakeFiles/result.dir/main.cpp.o -c /home/dimadivan/lab3_sem3/main.cpp",
+  "file": "/home/dimadivan/lab3_sem3/main.cpp"
+}
+]
