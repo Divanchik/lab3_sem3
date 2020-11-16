@@ -26,7 +26,7 @@
 					[
 						0
 					],
-					"name" : "Project",
+					"name" : "lab3_sem3",
 					"targetIndexes" : 
 					[
 						0
@@ -38,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "result::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-result-Debug-589eab2396344a8f9f58.json",
+					"jsonFile" : "target-result-Debug-3d010428bfb1f5b64bc6.json",
 					"name" : "result",
 					"projectIndex" : 0
 				}
