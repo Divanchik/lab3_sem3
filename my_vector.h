@@ -38,6 +38,7 @@ class MyVector
     {
         std::cout << "Move constructor!" << std::endl;
         a._data = nullptr;
+        a._size = 0;
     }
     /// Assign copy operator \param[in] a MyVector
     MyVector<T>& operator=(const MyVector<T>& a)
@@ -63,11 +64,13 @@ class MyVector
         _size = a._size;
         _capacity = a._capacity;
         a._data = nullptr;
+        a._size = 0;
         return *this;
     }
     /// Destructor
     ~MyVector()
     {
+        std::cout << "Destructor!" << std::endl;
         delete[] _data;
     }
     /// Swap \param[in, out] a MyVector
@@ -111,7 +114,23 @@ class MyVector
     const_iterator begin() const {return _data;}
     /// \return Iterator to end
     const_iterator end() const {return _data + _size;}
-
+    iterator insert(const_iterator pos, const T& value)
+    {
+        resize(_size + 1);
+        size_t index = pos - begin();
+        for (size_t i = _size - 2; i >= index; i--)
+            _data[i+1] = std::move_if_noexcept(_data[i]);
+        _data[index] = value;
+        return _data + index;
+    }
+    iterator erase(const_iterator pos)
+    {
+        size_t index = pos - begin();
+        for (size_t i = index; i < _size - 1; i++)
+            _data[i] = std::move_if_noexcept(_data[i+1]);
+        resize(_size - 1);
+        return _data;
+    }
     // UNNEEDED
     // /**
     //  * Reallocate array without data copying
@@ -166,8 +185,14 @@ template<typename T>
 std::ostream& operator<<(std::ostream& os, const MyVector<T>& obj)
 {
     std::cout << "[";
-    for (size_t i = 0;i < obj.size() - 1;i++)
-        std::cout << obj[i] << ", ";
-    std::cout << obj[obj.size() - 1] << "]";
+    if (obj.size() > 0)
+    {
+        for (size_t i = 0;i < obj.size() - 1;i++)
+            std::cout << obj[i] << ", ";
+        std::cout << obj[obj.size() - 1];
+    }
+    else
+        std::cout << " ";
+    std::cout << "]";
     return os;
 }
