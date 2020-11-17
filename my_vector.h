@@ -23,31 +23,40 @@ class MyVector
     /// \return Size of actual space
     size_t capacity() const noexcept {return _capacity;}
     /// Default constructor
-    MyVector(): _data(nullptr), _size(0), _capacity(0) {}
+    MyVector(): _data(nullptr), _size(0), _capacity(0) {std::cout << "Default constructor!" << std::endl;}
+    /// Constructor, allocating demanded memory \param[in] new_size New size of array
+    MyVector(size_t new_size): _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) {std::cout << "Size constructor!" << std::endl;}
     /// Copy constructor \param[in] a MyVector
     MyVector(const MyVector<T>& a): _data(new T[a._capacity]), _size(a._size), _capacity(a._capacity)
     {
+        std::cout << "Copy constructor!" << std::endl;
         for (size_t i = 0; i < _size; ++i)
             _data[i] = a[i];
     }
     /// Move constructor \param[in] a MyVector
     MyVector(MyVector<T>&& a) noexcept : _data(a._data), _size(a._size), _capacity(a._capacity)
     {
+        std::cout << "Move constructor!" << std::endl;
         a._data = nullptr;
     }
     /// Assign copy operator \param[in] a MyVector
     MyVector<T>& operator=(const MyVector<T>& a)
     {
+        std::cout << "Copy assign!" << std::endl;
         if (&a == this)
             return *this;
-        reallocate(a.capacity());
-        for (size_t i = 0; i < a.size(); i++)
+        clean();
+        _capacity = a.capacity();
+        _data = new T[_capacity];
+        _size = a.size();
+        for (size_t i = 0; i < _size; i++)
             _data[i] = a[i];
         return *this;
     }
     /// Assign move operator \param[in] a MyVector
     MyVector<T>& operator=(MyVector<T>&& a) noexcept
     {
+        std::cout << "Move assign!" << std::endl;
         if (&a == this)
             return *this;
         _data = a._data;
@@ -84,48 +93,81 @@ class MyVector
     {
         if (index >= _size)
             throw "Access error: Index out of range!";
+        // std::cout << "Access to [" << index << "] element!" << std::endl;
         return _data[index];
     }
     /**
      * Access operator
      * \param[in] index Index of element
      */
-    const T& operator [](size_t index) const
+    T operator [](size_t index) const
     {
         if (index >= _size)
             throw "Access error: Index out of range!";
+        // std::cout << "Access to value of [" << index << "] element!" << std::endl;
         return _data[index];
     }
     /// \return Iterator to beginning
     const_iterator begin() const {return _data;}
     /// \return Iterator to end
     const_iterator end() const {return _data + _size;}
-    /**
-     * Reallocate array without data copying
-     * \param[in] new_size New size of array
-     */
-    void reallocate(size_t new_size)
-    {
-        clean();
-        _data = new T[new_size];
-        _capacity = new_size;
-    }
+
+    // UNNEEDED
+    // /**
+    //  * Reallocate array without data copying
+    //  * \param[in] new_size New size of array
+    //  */
+    // void reallocate(size_t new_size)
+    // {
+    //     clean();
+    //     _capacity = new_size;
+    //     _data = new T[_capacity];
+    // }
+
     /**
      * Change size of vector
      * \param[in] new_size New size of array
      */
     void resize(size_t new_size)
     {
-        if (new_size <= _capacity - 1)
+        if (_capacity == 0)
+        {
+            _capacity = new_size + 100;
+            _data = new T[_capacity];
             _size = new_size;
+        }
         else
         {
-            T* tmp = new T[new_size + 100];
-            _capacity = new_size + 100;
-            for (size_t i = 0;i < _size; i++)
-                tmp[i] = _data[i];
-            _size = new_size;
-            _data = tmp;
+            if (new_size <= _capacity - 1)
+                _size = new_size;
+            else
+            {
+                T* tmp = new T[new_size + 100];
+                for (size_t i = 0;i < _size; i++)
+                    tmp[i] = _data[i];
+                clean();
+                _data = tmp;
+                _size = new_size;
+                _capacity = new_size + 100;
+            }
         }
     }
+    /// Output method
+    void output()
+    {
+        std::cout << "[";
+        for (size_t i = 0;i < _size - 1;i++)
+            std::cout << _data[i] << ", ";
+        std::cout << _data[_size - 1] << "]" << std::endl;
+    }
 };
+template<typename T>
+/// Output overload for MyVector
+std::ostream& operator<<(std::ostream& os, const MyVector<T>& obj)
+{
+    std::cout << "[";
+    for (size_t i = 0;i < obj.size() - 1;i++)
+        std::cout << obj[i] << ", ";
+    std::cout << obj[obj.size() - 1] << "]";
+    return os;
+}

@@ -19,6 +19,8 @@ size\+\_\+t \mbox{\hyperlink{class_my_vector_af61ac801c95ca0fbb081624ac8080cf1}{
 \mbox{\Hypertarget{class_my_vector_ac356762c5ced52c0d934476cef32e472}\label{class_my_vector_ac356762c5ced52c0d934476cef32e472}} 
 \mbox{\hyperlink{class_my_vector_ac356762c5ced52c0d934476cef32e472}{My\+Vector}} ()
 \begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_my_vector_a2db65f2c14b38238bf69c35e50255009}{My\+Vector}} (size\+\_\+t new\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Constructor, allocating demanded memory. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_my_vector_a4b98bc10bcd90ea3764d1d0a7c985bd9}{My\+Vector}} (const \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$ \&a)
 \begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_my_vector_a14aeb13c1c8143bc1fbc76ba9c72b177}{My\+Vector}} (\mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$ \&\&a) noexcept
@@ -37,23 +39,37 @@ void \mbox{\hyperlink{class_my_vector_a3a3840cabb9ead8fd95918c8a51c7b66}{clean}}
 \begin{DoxyCompactList}\small\item\em Clean vector. \end{DoxyCompactList}\item 
 T \& \mbox{\hyperlink{class_my_vector_ac93df6c957279676f48db6cd66b5283a}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index)
 \item 
-const T \& \mbox{\hyperlink{class_my_vector_aa36b6818e531e72ae7185bdefc66e4f3}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index) const
+T \mbox{\hyperlink{class_my_vector_ac9eaf452fd2bd65332cda39550c0ca3f}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index) const
 \item 
 const\+\_\+iterator \mbox{\hyperlink{class_my_vector_afb5fd95fb25a275b5f26e6f3676dc654}{begin}} () const
 \item 
 const\+\_\+iterator \mbox{\hyperlink{class_my_vector_a1386e6ab5558668add5f878a459a0d6d}{end}} () const
-\item 
-void \mbox{\hyperlink{class_my_vector_ac1a067662218faf9252e795ba287bf2d}{reallocate}} (size\+\_\+t new\+\_\+size)
 \item 
 void \mbox{\hyperlink{class_my_vector_a5c6ce072065946cbd91b39bc869ccd9c}{resize}} (size\+\_\+t new\+\_\+size)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_my_vector_a2db65f2c14b38238bf69c35e50255009}\label{class_my_vector_a2db65f2c14b38238bf69c35e50255009}} 
+\index{MyVector$<$ T $>$@{MyVector$<$ T $>$}!MyVector@{MyVector}}
+\index{MyVector@{MyVector}!MyVector$<$ T $>$@{MyVector$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{MyVector()}{MyVector()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$\+::\mbox{\hyperlink{class_my_vector}{My\+Vector}} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{new\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor, allocating demanded memory. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em new\+\_\+size} & New size of array \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{class_my_vector_a4b98bc10bcd90ea3764d1d0a7c985bd9}\label{class_my_vector_a4b98bc10bcd90ea3764d1d0a7c985bd9}} 
 \index{MyVector$<$ T $>$@{MyVector$<$ T $>$}!MyVector@{MyVector}}
 \index{MyVector@{MyVector}!MyVector$<$ T $>$@{MyVector$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{MyVector()}{MyVector()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+\doxysubsubsection{\texorpdfstring{MyVector()}{MyVector()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$\+::\mbox{\hyperlink{class_my_vector}{My\+Vector}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$ \&}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -69,7 +85,7 @@ Copy constructor.
 \mbox{\Hypertarget{class_my_vector_a14aeb13c1c8143bc1fbc76ba9c72b177}\label{class_my_vector_a14aeb13c1c8143bc1fbc76ba9c72b177}} 
 \index{MyVector$<$ T $>$@{MyVector$<$ T $>$}!MyVector@{MyVector}}
 \index{MyVector@{MyVector}!MyVector$<$ T $>$@{MyVector$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{MyVector()}{MyVector()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+\doxysubsubsection{\texorpdfstring{MyVector()}{MyVector()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$\+::\mbox{\hyperlink{class_my_vector}{My\+Vector}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$ \&\&}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
 
@@ -159,28 +175,16 @@ Access operator
 \mbox{\texttt{ in}}  & {\em index} & Index of element \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_my_vector_aa36b6818e531e72ae7185bdefc66e4f3}\label{class_my_vector_aa36b6818e531e72ae7185bdefc66e4f3}} 
+\mbox{\Hypertarget{class_my_vector_ac9eaf452fd2bd65332cda39550c0ca3f}\label{class_my_vector_ac9eaf452fd2bd65332cda39550c0ca3f}} 
 \index{MyVector$<$ T $>$@{MyVector$<$ T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
 \index{operator\mbox{[}\mbox{]}@{operator[]}!MyVector$<$ T $>$@{MyVector$<$ T $>$}}
 \doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-const T\& \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+T \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 Access operator 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\texttt{ in}}  & {\em index} & Index of element \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{class_my_vector_ac1a067662218faf9252e795ba287bf2d}\label{class_my_vector_ac1a067662218faf9252e795ba287bf2d}} 
-\index{MyVector$<$ T $>$@{MyVector$<$ T $>$}!reallocate@{reallocate}}
-\index{reallocate@{reallocate}!MyVector$<$ T $>$@{MyVector$<$ T $>$}}
-\doxysubsubsection{\texorpdfstring{reallocate()}{reallocate()}}
-{\footnotesize\ttfamily template$<$typename T $>$ \\
-void \mbox{\hyperlink{class_my_vector}{My\+Vector}}$<$ T $>$\+::reallocate (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{new\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-Reallocate array without data copying 
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em new\+\_\+size} & New size of array \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{class_my_vector_a5c6ce072065946cbd91b39bc869ccd9c}\label{class_my_vector_a5c6ce072065946cbd91b39bc869ccd9c}} 
@@ -225,4 +229,4 @@ Swap.
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-my\+\_\+vector.\+h\end{DoxyCompactItemize}
+\mbox{\hyperlink{my__vector_8h}{my\+\_\+vector.\+h}}\end{DoxyCompactItemize}
