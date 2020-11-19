@@ -39,32 +39,21 @@ class MyVector
         std::cout << "Move constructor!" << std::endl;
         a._data = nullptr;
         a._size = 0;
+        a._capacity = 0;
     }
     /// Assign copy operator \param[in] a MyVector
     MyVector<T>& operator=(const MyVector<T>& a)
     {
         std::cout << "Copy assign!" << std::endl;
-        if (&a == this)
-            return *this;
-        clean();
-        _capacity = a.capacity();
-        _data = new T[_capacity];
-        _size = a.size();
-        for (size_t i = 0; i < _size; i++)
-            _data[i] = a[i];
+        MyVector<T> tmp(a);
+        swap(tmp);
         return *this;
     }
     /// Assign move operator \param[in] a MyVector
     MyVector<T>& operator=(MyVector<T>&& a) noexcept
     {
         std::cout << "Move assign!" << std::endl;
-        if (&a == this)
-            return *this;
-        _data = a._data;
-        _size = a._size;
-        _capacity = a._capacity;
-        a._data = nullptr;
-        a._size = 0;
+        swap(a);
         return *this;
     }
     /// Destructor
@@ -76,12 +65,13 @@ class MyVector
     /// Swap \param[in, out] a MyVector
     void swap(MyVector<T>& a) noexcept
     {
+        std::cout << "Swap!" << std::endl;
         std::swap(_data, a._data);
         std::swap(_size, a._size);
         std::swap(_capacity, a._capacity);
     }
     /// Clean vector
-    void clean() noexcept
+    void clear() noexcept
     {
         delete[] _data;
         _data = nullptr;
@@ -116,12 +106,20 @@ class MyVector
     const_iterator end() const {return _data + _size;}
     iterator insert(const_iterator pos, const T& value)
     {
+        if (pos == end())
+        {
+            std::cout << "Inserting element in the end!" << std::endl;
+            resize(_size + 1);
+            _data[_size - 1] = value;
+            return _data + _size - 1;
+        }
+        std::cout << "Inserting element!" << std::endl;
         resize(_size + 1);
-        size_t index = pos - begin();
-        for (size_t i = _size - 2; i >= index; i--)
-            _data[i+1] = std::move_if_noexcept(_data[i]);
-        _data[index] = value;
-        return _data + index;
+        T* tmp = _data + _size - 1;
+        for (;tmp != pos; tmp--)
+            *(tmp) = std::move_if_noexcept(*(tmp - 1));
+        *tmp = value;
+        return tmp;
     }
     iterator erase(const_iterator pos)
     {
@@ -131,24 +129,13 @@ class MyVector
         resize(_size - 1);
         return _data;
     }
-    // UNNEEDED
-    // /**
-    //  * Reallocate array without data copying
-    //  * \param[in] new_size New size of array
-    //  */
-    // void reallocate(size_t new_size)
-    // {
-    //     clean();
-    //     _capacity = new_size;
-    //     _data = new T[_capacity];
-    // }
-
     /**
      * Change size of vector
      * \param[in] new_size New size of array
      */
     void resize(size_t new_size)
     {
+        std::cout << "Resize from " << _size << " to " << new_size << "!" << std::endl;
         if (_capacity == 0)
         {
             _capacity = new_size + 100;
@@ -164,7 +151,7 @@ class MyVector
                 T* tmp = new T[new_size + 100];
                 for (size_t i = 0;i < _size; i++)
                     tmp[i] = _data[i];
-                clean();
+                clear();
                 _data = tmp;
                 _size = new_size;
                 _capacity = new_size + 100;

@@ -4,6 +4,7 @@
  */
 #include <iostream>
 #include "my_vector.h"
+#include "my_list.h"
 /// 'main' function \return Exit code('0' if program ended successfully)
 int main()
 {
@@ -23,6 +24,16 @@ int main()
         c[2] = 7;
         b = c;
         c = std::move(b);
+        std::cout << "#1" << std::endl;
+        a.insert(a.end(), 14);
+        std::cout << "#1" << std::endl;
+        a.insert(a.begin(), 100);
+        std::cout << "#1" << std::endl;
+        a.insert(a.end(), 10);
+        std::cout << "#1" << std::endl;
+        a.erase(a.end());
+        a.erase(a.begin());
+        a.erase(a.begin());
         std::cout << a.size() << " " << b.size() << " " << c.size() << " " << d.size() << std::endl;
         std::cout  << "a = " << a << std::endl;
         std::cout  << "b = " << b << std::endl;
