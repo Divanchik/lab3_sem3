@@ -1,11 +1,11 @@
 /**
  * \file
- * MyVector container
+ * Vector container
  */
 #pragma once
 
 template<typename T>
-class MyVector
+class Vector
 {
     /// Data array
     T* _data;
@@ -23,54 +23,54 @@ class MyVector
     /// \return Size of actual space
     size_t capacity() const noexcept {return _capacity;}
     /// Default constructor
-    MyVector(): _data(nullptr), _size(0), _capacity(0) {std::cout << "Default constructor!" << std::endl;}
+    Vector(): _data(nullptr), _size(0), _capacity(0) {std::cout << "Default constructor!" << std::endl;}
     /// Constructor, allocating demanded memory \param[in] new_size New size of array
-    MyVector(size_t new_size): _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) {std::cout << "Size constructor!" << std::endl;}
-    /// Copy constructor \param[in] a MyVector
-    MyVector(const MyVector<T>& a): _data(new T[a._capacity]), _size(a._size), _capacity(a._capacity)
+    Vector(size_t new_size): _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) {std::cout << "Size constructor!" << std::endl;}
+    /// Copy constructor \param[in] a Vector
+    Vector(const Vector<T>& a): _data(new T[a._capacity]), _size(a._size), _capacity(a._capacity)
     {
         std::cout << "Copy constructor!" << std::endl;
         for (size_t i = 0; i < _size; ++i)
             _data[i] = a[i];
     }
-    /// Move constructor \param[in] a MyVector
-    MyVector(MyVector<T>&& a) noexcept : _data(a._data), _size(a._size), _capacity(a._capacity)
+    /// Move constructor \param[in] a Vector
+    Vector(Vector<T>&& a) noexcept : _data(a._data), _size(a._size), _capacity(a._capacity)
     {
         std::cout << "Move constructor!" << std::endl;
         a._data = nullptr;
         a._size = 0;
         a._capacity = 0;
     }
-    /// Assign copy operator \param[in] a MyVector
-    MyVector<T>& operator=(const MyVector<T>& a)
+    /// Assign copy operator \param[in] a Vector
+    Vector<T>& operator=(const Vector<T>& a)
     {
         std::cout << "Copy assign!" << std::endl;
-        MyVector<T> tmp(a);
+        Vector<T> tmp(a);
         swap(tmp);
         return *this;
     }
-    /// Assign move operator \param[in] a MyVector
-    MyVector<T>& operator=(MyVector<T>&& a) noexcept
+    /// Assign move operator \param[in] a Vector
+    Vector<T>& operator=(Vector<T>&& a) noexcept
     {
         std::cout << "Move assign!" << std::endl;
         swap(a);
         return *this;
     }
     /// Destructor
-    ~MyVector()
+    ~Vector()
     {
         std::cout << "Destructor!" << std::endl;
         delete[] _data;
     }
-    /// Swap \param[in, out] a MyVector
-    void swap(MyVector<T>& a) noexcept
+    /// Swap \param[in, out] a Vector
+    void swap(Vector<T>& a) noexcept
     {
         std::cout << "Swap!" << std::endl;
         std::swap(_data, a._data);
         std::swap(_size, a._size);
         std::swap(_capacity, a._capacity);
     }
-    /// Clean vector
+    /// CleanVector
     void clear() noexcept
     {
         delete[] _data;
@@ -130,7 +130,7 @@ class MyVector
         return _data;
     }
     /**
-     * Change size of vector
+     * Change size ofVector
      * \param[in] new_size New size of array
      */
     void resize(size_t new_size)
@@ -168,8 +168,8 @@ class MyVector
     }
 };
 template<typename T>
-/// Output overload for MyVector
-std::ostream& operator<<(std::ostream& os, const MyVector<T>& obj)
+/// Output overload for Vector
+std::ostream& operator<<(std::ostream& os, const Vector<T>& obj)
 {
     std::cout << "[";
     if (obj.size() > 0)

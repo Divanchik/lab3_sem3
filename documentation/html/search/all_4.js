@@ -2,6 +2,8 @@ var searchData=
 [
   ['main_5',['main',['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main.cpp']]],
   ['main_2ecpp_6',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['my_5fvector_2eh_7',['my_vector.h',['../my__vector_8h.html',1,'']]],
-  ['myvector_8',['MyVector',['../class_my_vector.html',1,'MyVector&lt; T &gt;'],['../class_my_vector.html#ac356762c5ced52c0d934476cef32e472',1,'MyVector::MyVector()'],['../class_my_vector.html#a2db65f2c14b38238bf69c35e50255009',1,'MyVector::MyVector(size_t new_size)'],['../class_my_vector.html#a4b98bc10bcd90ea3764d1d0a7c985bd9',1,'MyVector::MyVector(const MyVector&lt; T &gt; &amp;a)'],['../class_my_vector.html#a14aeb13c1c8143bc1fbc76ba9c72b177',1,'MyVector::MyVector(MyVector&lt; T &gt; &amp;&amp;a) noexcept']]]
+  ['my_5flist_2eh_7',['my_list.h',['../my__list_8h.html',1,'']]],
+  ['my_5fvector_2eh_8',['my_vector.h',['../my__vector_8h.html',1,'']]],
+  ['mylist_9',['MyList',['../class_my_list.html',1,'']]],
+  ['myvector_10',['MyVector',['../class_my_vector.html',1,'MyVector&lt; T &gt;'],['../class_my_vector.html#ac356762c5ced52c0d934476cef32e472',1,'MyVector::MyVector()'],['../class_my_vector.html#a2db65f2c14b38238bf69c35e50255009',1,'MyVector::MyVector(size_t new_size)'],['../class_my_vector.html#a4b98bc10bcd90ea3764d1d0a7c985bd9',1,'MyVector::MyVector(const MyVector&lt; T &gt; &amp;a)'],['../class_my_vector.html#a14aeb13c1c8143bc1fbc76ba9c72b177',1,'MyVector::MyVector(MyVector&lt; T &gt; &amp;&amp;a) noexcept']]]
 ];

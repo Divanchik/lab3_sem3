@@ -6,19 +6,20 @@
 #include "my_vector.h"
 #include "my_list.h"
 /// 'main' function \return Exit code('0' if program ended successfully)
+template<typename T> using CollectionType = Vector<T>;
 int main()
 {
     try
     {
-        MyVector<int> a;
+        Vector<int> a;
         a.resize(5);
         for (size_t i=0;i < a.size();i++)
             a[i] = i*i;
-        MyVector<int> b(a);
-        MyVector<int> c(3);
+        Vector<int> b(a);
+        Vector<int> c(3);
         b[0] = 100;
         a.swap(b);
-        MyVector<int> d(std::move(a));
+        Vector<int> d(std::move(a));
         c[0] = 7;
         c[1] = 7;
         c[2] = 7;
