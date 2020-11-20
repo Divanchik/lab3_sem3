@@ -2,10 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "result.exe"
-		},
-		{
-			"path" : "result.pdb"
+			"path" : "result"
 		}
 	],
 	"backtrace" : 1,
@@ -27,7 +24,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 5,
+				"line" : 7,
 				"parent" : 0
 			}
 		]
@@ -38,7 +35,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : " -Wall -Wconversion -Wextra -Wpedantic -g  "
 				}
 			],
 			"language" : "CXX",
@@ -54,22 +51,18 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-g",
+				"fragment" : "-Wall -Wconversion -Wextra -Wpedantic -g",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "",
+				"fragment" : "-rdynamic",
 				"role" : "flags"
-			},
-			{
-				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
-				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "result",
-	"nameOnDisk" : "result.exe",
+	"nameOnDisk" : "result",
 	"paths" : 
 	{
 		"build" : ".",

@@ -1,18 +1,24 @@
 /**
  * \file
- * MyList container
+ * List container
+ * \todo size() insert() erase() begin() end() swap() resize() clear()
  */
 #pragma once
 
 template<typename T>
-class MyList
+/// List class
+class List
 {
+    /// Node structure
     struct Node
     {
+        /// Data
         T data;
+        /// Next node
         Node* prev;
+        /// Previous node
         Node* next;
-
+        /// Constructor
         Node(const T& data, Node* prev, Node* next): data(data), prev(prev), next(next) {}
     };
     /// Head of list
@@ -22,7 +28,7 @@ class MyList
     /// Size of list
     size_t _size;
     public:
-
+    /// Constant iterator class
     class ConstIterator
     {
         Node* node;
@@ -50,27 +56,30 @@ class MyList
         }
     }
     /// Default construcor
-    MyList();
-    /// Size constructor
-    MyList(size_t new_size);
-    /// Copy constructor
-    MyList(const MyList<T>& a);
-    /// Move constructor
-    MyList(MyList<T>&& a);
+    List();
+    /// Size constructor \param[in] new_size New size of list
+    List(size_t new_size);
+    /// Copy constructor \param[in] a List
+    List(const List<T>& a);
+    /// Move constructor \param[in,out] a List
+    List(List<T>&& a);
     /// Copy assign
-    MyList<T>& operator =(const MyList<T>& a);
+    List<T>& operator =(const List<T>& a);
     /// Move assign
-    MyList<T>& operator =(MyList<T>&& a);
+    List<T>& operator =(List<T>&& a);
     /// Destructor
-    ~MyList();
-    /// Access operator
+    ~List();
+    /// Access operator \param[in] index Index of element
     T& operator [](size_t index);
-    /// Constant access operator
+    /// Constant access operator \param[in] index Index of element
     T operator [](size_t index) const;
-    /// size() insert() erase() begin() end() swap() resize() clear()
+    /// \return Size of list
     size_t size();
-    void swap(MyList<T>& b);
+    /// Swap method
+    void swap(List<T>& b);
+    /// Change size of list \param[in] new_size New size of list
     void resize(size_t new_size);
+    /// Clear the list
     void clear();
     
 };

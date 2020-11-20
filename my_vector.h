@@ -130,7 +130,7 @@ class Vector
         return _data;
     }
     /**
-     * Change size ofVector
+     * Change size of Vector
      * \param[in] new_size New size of array
      */
     void resize(size_t new_size)

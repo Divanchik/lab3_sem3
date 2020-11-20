@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['size_35',['size',['../class_my_vector.html#a7add02f26f90f71b93f108e5ca7b8543',1,'MyVector']]],
-  ['swap_36',['swap',['../class_my_vector.html#ada5203d3c951e375877948fa379eb357',1,'MyVector']]]
+  ['resize_38',['resize',['../class_list.html#a9d436283ef1d14d0b893dc754a9559ad',1,'List::resize()'],['../class_vector.html#ae904067f0717793273fa2b6fe8fc9eb8',1,'Vector::resize()']]]
 ];

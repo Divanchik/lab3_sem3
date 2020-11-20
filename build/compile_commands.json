@@ -1,7 +1,7 @@
 [
 {
-  "directory": "C:/Users/Lenovo/Desktop/lab3_sem3/build",
-  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\G__~1.EXE   -g -o CMakeFiles\\result.dir\\main.cpp.obj -c C:\\Users\\Lenovo\\Desktop\\lab3_sem3\\main.cpp",
-  "file": "C:/Users/Lenovo/Desktop/lab3_sem3/main.cpp"
+  "directory": "/home/dimadivan/lab3_sem3/build",
+  "command": "/bin/g++-9     -Wall -Wconversion -Wextra -Wpedantic -g   -o CMakeFiles/result.dir/main.cpp.o -c /home/dimadivan/lab3_sem3/main.cpp",
+  "file": "/home/dimadivan/lab3_sem3/main.cpp"
 }
 ]

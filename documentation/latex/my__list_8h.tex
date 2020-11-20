@@ -1,13 +1,58 @@
 \hypertarget{my__list_8h}{}\doxysection{my\+\_\+list.\+h File Reference}
 \label{my__list_8h}\index{my\_list.h@{my\_list.h}}
 This graph shows which files directly or indirectly include this file\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=142pt]{my__list_8h__dep__incl}
+\end{center}
+\end{figure}
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \mbox{\hyperlink{class_my_list}{My\+List$<$ T $>$}}
+class \mbox{\hyperlink{class_list}{List$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_list}{List}} class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_list_1_1_const_iterator}{List$<$ T $>$\+::\+Const\+Iterator}}
+\begin{DoxyCompactList}\small\item\em Constant iterator class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__list_8h_aec07e0ee98729a19bc41fe09e433f5d0}\label{my__list_8h_aec07e0ee98729a19bc41fe09e433f5d0}} 
+using {\bfseries difference\+\_\+type} = ptrdiff\+\_\+t
+\item 
+\mbox{\Hypertarget{my__list_8h_afb9ded5f49336ae503bb9f2035ea902b}\label{my__list_8h_afb9ded5f49336ae503bb9f2035ea902b}} 
+using {\bfseries value\+\_\+type} = T
+\item 
+\mbox{\Hypertarget{my__list_8h_a80df5233b2b681eaa409ed0f19eed474}\label{my__list_8h_a80df5233b2b681eaa409ed0f19eed474}} 
+using {\bfseries pointer} = const T $\ast$
+\item 
+\mbox{\Hypertarget{my__list_8h_ae6e34408fef09c144db62c2f42f5e691}\label{my__list_8h_ae6e34408fef09c144db62c2f42f5e691}} 
+using {\bfseries reference} = const T \&
+\item 
+\mbox{\Hypertarget{my__list_8h_a13fe24ca0865b19fbff05ff095c4ffea}\label{my__list_8h_a13fe24ca0865b19fbff05ff095c4ffea}} 
+using {\bfseries iterator\+\_\+category} = std\+::bidirectional\+\_\+iterator\+\_\+tag
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__list_8h_a926e077dc011d29105191e11ca68a9d4}\label{my__list_8h_a926e077dc011d29105191e11ca68a9d4}} 
+{\bfseries Const\+Iterator} (Node $\ast$node)
+\item 
+\mbox{\Hypertarget{my__list_8h_a828dfff63b3fd1a36c4933b5548c75c2}\label{my__list_8h_a828dfff63b3fd1a36c4933b5548c75c2}} 
+Const\+Iterator \& {\bfseries operator++} ()
+\item 
+\mbox{\Hypertarget{my__list_8h_a37b99b4f7793501c0e359b2d9e4f75d8}\label{my__list_8h_a37b99b4f7793501c0e359b2d9e4f75d8}} 
+Const\+Iterator {\bfseries operator++} (int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__list_8h_ab88cd70dad2e152cea983610f2a16e68}\label{my__list_8h_ab88cd70dad2e152cea983610f2a16e68}} 
+Node $\ast$ {\bfseries node}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-\mbox{\hyperlink{class_my_list}{My\+List}} container 
+\mbox{\hyperlink{class_list}{List}} container \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]size() insert() erase() begin() end() swap() resize() clear() \end{DoxyRefDesc}
