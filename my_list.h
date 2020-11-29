@@ -1,85 +1,70 @@
-/**
- * \file
- * List container
- * \todo size() insert() erase() begin() end() swap() resize() clear()
- */
 #pragma once
 
-template<typename T>
-/// List class
+template <typename T>
+struct Node
+{
+    T _data;
+    Node *_next;
+    Node *_prev;
+
+    Node(const T &data, Node *prev, Node *next) : _data(data), _next(next), _prev(prev) {}
+};
+
+template <typename T>
 class List
 {
-    /// Node structure
-    struct Node
-    {
-        /// Data
-        T data;
-        /// Next node
-        Node* prev;
-        /// Previous node
-        Node* next;
-        /// Constructor
-        Node(const T& data, Node* prev, Node* next): data(data), prev(prev), next(next) {}
-    };
-    /// Head of list
-    Node* _head;
-    /// Past-the-end element
-    Node* _tail;
-    /// Size of list
+    Node *_head;
+    Node *_tail;
+    Node *_end;
     size_t _size;
-    public:
-    /// Constant iterator class
-    class ConstIterator
+
+public:
+    List() : _head(nullptr), _tail(nullptr), _end(T(), nullptr, nullptr), _size(0) {}
+    List(size_t new_size);
+    void insert(const Node *pos, const T &data)
     {
-        Node* node;
-        ConstIterator(Node* node): node(node) {}
-
-        public:
-        using difference_type = ptrdiff_t;
-        using value_type = T;
-        using pointer = const T*;
-        using reference = const T&;
-        using iterator_category = std::bidirectional_iterator_tag;
-
-        friend class List<T>;
-
-        ConstIterator& operator++()
+        if (_size == 0)
         {
-            node = node->next;
-            return *this;
+            _head = new Node(data, nullptr, _end);
+            _tail = _head;
+            _end->prev = _tail;
+            return;
         }
-        ConstIterator operator++(int)
+        if (pos == begin())
         {
-            auto result(*this);
-            node = node->next;
-            return result
+            Node *tmp = new Node(data, nullptr, _head);
+            _head->prev = tmp;
+            _head = tmp;
+            _tail = _end->prev;
+        }
+        else if (pos == end())
+        {
+            Node *tmp = new Node(data, nullptr, _head);
+            _tail->
+        }
+        else
+        {
         }
     }
-    /// Default construcor
-    List();
-    /// Size constructor \param[in] new_size New size of list
-    List(size_t new_size);
-    /// Copy constructor \param[in] a List
-    List(const List<T>& a);
-    /// Move constructor \param[in,out] a List
-    List(List<T>&& a);
-    /// Copy assign
-    List<T>& operator =(const List<T>& a);
-    /// Move assign
-    List<T>& operator =(List<T>&& a);
-    /// Destructor
-    ~List();
-    /// Access operator \param[in] index Index of element
-    T& operator [](size_t index);
-    /// Constant access operator \param[in] index Index of element
-    T operator [](size_t index) const;
-    /// \return Size of list
-    size_t size();
-    /// Swap method
-    void swap(List<T>& b);
-    /// Change size of list \param[in] new_size New size of list
-    void resize(size_t new_size);
-    /// Clear the list
-    void clear();
-    
+    size_t size() const noexcept { return _size; }
+    Node *begin() const noexcept { return _head; }
+    Node *end() const noexcept { return _end; }
+    T operator[](size_t index) const
+    {
+        if (index >= _size)
+            throw "IndexError: Index out of range!";
+        Node *tmp = _head;
+        for (size_t i = 0; i != index; i++)
+            tmp = tmp->next;
+        return tmp->_data;
+    }
+    T &operator[](size_t index)
+    {
+        if (index >= _size)
+            throw "IndexError: Index out of range!";
+        Node *tmp = _head;
+        for (size_t i = 0; i != index; i++)
+            tmp = tmp->next;
+        return tmp->_data;
+    }
 };

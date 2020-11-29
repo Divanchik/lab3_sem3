@@ -5,7 +5,9 @@
 #include <iostream>
 #include "my_vector.h"
 #include "my_list.h"
-template<typename T> using CollectionType = Vector<T>;
+
+template <typename T>
+using CollectionType = List<T>;
 /// 'main' function \return Exit code('0' if program ended successfully)
 int main()
 {
@@ -13,8 +15,8 @@ int main()
     {
         CollectionType<int> a;
         a.resize(5);
-        for (size_t i=0;i < a.size();i++)
-            a[i] = i*i;
+        for (size_t i = 0; i < a.size(); i++)
+            a[i] = i * i;
         CollectionType<int> b(a);
         CollectionType<int> c(3);
         b[0] = 100;
@@ -32,13 +34,13 @@ int main()
         a.erase(a.begin());
         a.erase(a.begin());
         std::cout << a.size() << " " << b.size() << " " << c.size() << " " << d.size() << std::endl;
-        std::cout  << "a = " << a << std::endl;
-        std::cout  << "b = " << b << std::endl;
-        std::cout  << "c = " << c << std::endl;
-        std::cout  << "d = " << d << std::endl;
+        std::cout << "a = " << a << std::endl;
+        std::cout << "b = " << b << std::endl;
+        std::cout << "c = " << c << std::endl;
+        std::cout << "d = " << d << std::endl;
         return 0;
     }
-    catch (const char* message)
+    catch (const char *message)
     {
         std::cout << "Program throwed an exception: " << message << std::endl;
     }
