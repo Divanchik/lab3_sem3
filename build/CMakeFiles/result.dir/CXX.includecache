@@ -6,15 +6,19 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Lenovo/Desktop/lab3_sem3/main.cpp
+/home/dimadivan/lab3_sem3/main.cpp
 iostream
 -
+vector
+-
+list
+-
 my_vector.h
-C:/Users/Lenovo/Desktop/lab3_sem3/my_vector.h
+/home/dimadivan/lab3_sem3/my_vector.h
 my_list.h
-C:/Users/Lenovo/Desktop/lab3_sem3/my_list.h
+/home/dimadivan/lab3_sem3/my_list.h
 
-C:/Users/Lenovo/Desktop/lab3_sem3/my_list.h
+/home/dimadivan/lab3_sem3/my_list.h
 
-C:/Users/Lenovo/Desktop/lab3_sem3/my_vector.h
+/home/dimadivan/lab3_sem3/my_vector.h
 

@@ -1,0 +1,1 @@
+/bin/g++-9   -Wall -Wconversion -Wextra -Wpedantic -g  -rdynamic CMakeFiles/result1.dir/main_roma.cpp.o  -o result1 

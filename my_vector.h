@@ -18,13 +18,15 @@ public:
     using iterator = T *;
     using const_iterator = const T *;
 
+    /// \return 'true' if list is empty
+    bool empty() const noexcept { return (_size == 0 ? true : false); }
     /// \return Size of used space
     size_t size() const noexcept { return _size; }
     /// \return Size of actual space
     size_t capacity() const noexcept { return _capacity; }
     /// Default constructor
     Vector() : _data(nullptr), _size(0), _capacity(0) { std::cout << "Default constructor!" << std::endl; }
-    /// Constructor, allocating demanded memory \param[in] new_size New size of array
+    /// Size constructor \param[in] new_size New size of array
     Vector(size_t new_size) : _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) { std::cout << "Size constructor!" << std::endl; }
     /// Copy constructor \param[in] a Vector
     Vector(const Vector<T> &a) : _data(new T[a._capacity]), _size(a._size), _capacity(a._capacity)
@@ -70,7 +72,7 @@ public:
         std::swap(_size, a._size);
         std::swap(_capacity, a._capacity);
     }
-    /// CleanVector
+    /// Clear the vector
     void clear() noexcept
     {
         delete[] _data;
@@ -104,6 +106,7 @@ public:
     const_iterator begin() const { return _data; }
     /// \return Iterator to end
     const_iterator end() const { return _data + _size; }
+    /// Insert method
     iterator insert(const_iterator pos, const T &value)
     {
         if (pos == end())
@@ -121,6 +124,7 @@ public:
         *tmp = value;
         return tmp;
     }
+    /// Erase method
     iterator erase(const_iterator pos)
     {
         size_t index = pos - begin();
@@ -135,6 +139,8 @@ public:
      */
     void resize(size_t new_size)
     {
+        if (new_size > 10000000)
+            throw "MemoryError: Over 10000000 bytes memory requested!";
         std::cout << "Resize from " << _size << " to " << new_size << "!" << std::endl;
         if (_capacity == 0)
         {
@@ -167,19 +173,3 @@ public:
         std::cout << _data[_size - 1] << "]" << std::endl;
     }
 };
-template <typename T>
-/// Output overload for Vector
-std::ostream &operator<<(std::ostream &os, const Vector<T> &obj)
-{
-    std::cout << "[";
-    if (obj.size() > 0)
-    {
-        for (size_t i = 0; i < obj.size() - 1; i++)
-            std::cout << obj[i] << ", ";
-        std::cout << obj[obj.size() - 1];
-    }
-    else
-        std::cout << " ";
-    std::cout << "]";
-    return os;
-}

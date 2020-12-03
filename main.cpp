@@ -3,41 +3,42 @@
  * Body of the program
  */
 #include <iostream>
+#include <vector>
+#include <list>
 #include "my_vector.h"
 #include "my_list.h"
-
 template <typename T>
-using CollectionType = List<T>;
+using CollectionType = std::list<T>;
+using collection = CollectionType<int>;
+template <typename T>
+void print_container(const CollectionType<T>& a)
+{
+    std::cout << "[ ";
+    auto tmp = a.begin();
+    for (size_t i = 1; i < a.size(); i++)
+    {
+        std::cout << *tmp << ", ";
+        tmp++;
+    }
+    std::cout << *tmp << " ]" << std::endl;
+}
 /// 'main' function \return Exit code('0' if program ended successfully)
 int main()
 {
     try
     {
-        CollectionType<int> a;
-        a.resize(5);
-        for (size_t i = 0; i < a.size(); i++)
-            a[i] = i * i;
-        CollectionType<int> b(a);
-        CollectionType<int> c(3);
-        b[0] = 100;
-        a.swap(b);
-        CollectionType<int> d(std::move(a));
-        c[0] = 7;
-        c[1] = 7;
-        c[2] = 7;
-        b = c;
-        c = std::move(b);
-        a.insert(a.end(), 14);
-        a.insert(a.begin(), 100);
-        a.insert(a.end(), 10);
-        a.erase(a.end());
-        a.erase(a.begin());
-        a.erase(a.begin());
-        std::cout << a.size() << " " << b.size() << " " << c.size() << " " << d.size() << std::endl;
-        std::cout << "a = " << a << std::endl;
-        std::cout << "b = " << b << std::endl;
-        std::cout << "c = " << c << std::endl;
-        std::cout << "d = " << d << std::endl;
+        collection a;
+        collection b(10);
+        auto tmp = b.begin();
+        for (int i = 0; i < 10; i++, tmp++)
+            *tmp = i*i;
+        a = b;
+        collection c(a);
+        collection d = std::move(a);
+        print_container(a);
+        print_container(b);
+        print_container(c);
+        print_container(d);
         return 0;
     }
     catch (const char *message)
