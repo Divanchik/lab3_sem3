@@ -22,12 +22,11 @@ public:
     bool empty() const noexcept { return (_size == 0 ? true : false); }
     /// \return Size of used space
     size_t size() const noexcept { return _size; }
-    /// \return Size of actual space
-    size_t capacity() const noexcept { return _capacity; }
+
     /// Default constructor
-    Vector() : _data(nullptr), _size(0), _capacity(0) { std::cout << "Default constructor!" << std::endl; }
+    Vector() : _data(nullptr), _size(0), _capacity(0) {}
     /// Size constructor \param[in] new_size New size of array
-    Vector(size_t new_size) : _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) { std::cout << "Size constructor!" << std::endl; }
+    Vector(size_t new_size) : _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) {}
     /// Copy constructor \param[in] a Vector
     Vector(const Vector<T> &a) : _data(new T[a._capacity]), _size(a._size), _capacity(a._capacity)
     {
@@ -56,6 +55,9 @@ public:
     {
         std::cout << "Move assign!" << std::endl;
         swap(a);
+        a._data = nullptr;
+        a._size = 0;
+        a._capacity = 0;
         return *this;
     }
     /// Destructor
@@ -75,6 +77,8 @@ public:
     /// Clear the vector
     void clear() noexcept
     {
+        if (_capacity == 0)
+            return;
         delete[] _data;
         _data = nullptr;
         _size = 0;
@@ -102,10 +106,14 @@ public:
         // std::cout << "Access to value of [" << index << "] element!" << std::endl;
         return _data[index];
     }
-    /// \return Iterator to beginning
+    /// \return Constant iterator to beginning
     const_iterator begin() const { return _data; }
     /// \return Iterator to end
     const_iterator end() const { return _data + _size; }
+    /// \return Iterator to beginning
+    iterator begin() { return _data; }
+    /// \return Iterator to end
+    iterator end() { return _data + _size; }
     /// Insert method
     iterator insert(const_iterator pos, const T &value)
     {
@@ -118,16 +126,24 @@ public:
         }
         std::cout << "Inserting element!" << std::endl;
         resize(_size + 1);
-        T *tmp = _data + _size - 1;
-        for (; tmp != pos; tmp--)
-            *(tmp) = std::move_if_noexcept(*(tmp - 1));
-        *tmp = value;
-        return tmp;
+        const_iterator tmp = _data;
+        int index = (int)(pos - tmp);
+        std::cout << "Index: " << index << std::endl;
+        for (int i=_size - 2; i >= index; i--)
+            _data[i+1] = std::move_if_noexcept(_data[i]);
+        _data[index] = value;
+        return _data + index;
     }
     /// Erase method
     iterator erase(const_iterator pos)
     {
-        size_t index = pos - begin();
+        if (pos == end())
+        {
+            _data[_size] = 0;
+            resize(_size - 1);
+            return _data + _size - 1;
+        }
+        size_t index = pos - (const_iterator)_data;
         for (size_t i = index; i < _size - 1; i++)
             _data[i] = std::move_if_noexcept(_data[i + 1]);
         resize(_size - 1);
@@ -140,9 +156,9 @@ public:
     void resize(size_t new_size)
     {
         if (new_size > 10000000)
-            throw "MemoryError: Over 10000000 bytes memory requested!";
+            throw "MemoryError: Too many memory requested!";
         std::cout << "Resize from " << _size << " to " << new_size << "!" << std::endl;
-        if (_capacity == 0)
+        if (empty())
         {
             _capacity = new_size + 100;
             _data = new T[_capacity];
@@ -163,13 +179,5 @@ public:
                 _capacity = new_size + 100;
             }
         }
-    }
-    /// Output method
-    void output()
-    {
-        std::cout << "[";
-        for (size_t i = 0; i < _size - 1; i++)
-            std::cout << _data[i] << ", ";
-        std::cout << _data[_size - 1] << "]" << std::endl;
     }
 };

@@ -5,125 +5,146 @@
 #pragma once
 
 template <typename T>
-/// Structure Node
 struct Node
 {
-    /// Data
-    T _data;
-    /// Pointer to next Node
-    Node *_next;
-    /// Pointer to prevoius Node
-    Node *_prev;
+    T data;
+    Node *next;
+    Node *prev;
     /// Constructor
-    Node(const T &data, Node *prev, Node *next) : _data(data), _next(next), _prev(prev) {}
+    Node(const T &new_data, Node *new_prev, Node *new_next) : data(new_data), next(new_next), prev(new_prev) {}
 };
+
 template <typename T>
-/// Constant bidirectional iterator
-class bidirectional_list_iterator
+class List;
+template <typename T>
+class list_iterator
 {
-    /// Node pointer
     Node<T> *node;
 
 public:
-    /// Default constructor
-    bidirectional_list_iterator() : node(nullptr) {}
-    /// Constructor
-    bidirectional_list_iterator(Node<T> *new_node) : node(new_node) {}
-    /// Destructor
-    ~bidirectional_list_iterator() {}
+    list_iterator() : node(nullptr) {}                   /// Default constructor
+    list_iterator(Node<T> *new_node) : node(new_node) {} /// Constructor
+    ~list_iterator() {}                                  /// Destructor
     /// Preincrenment
-    bidirectional_list_iterator &operator++()
+    list_iterator &operator++()
     {
         node = node->next;
         return *this;
     }
     /// Postincrement
-    bidirectional_list_iterator operator++(int)
+    list_iterator operator++(int)
     {
         auto result(*this);
         node = node->next;
         return result;
     }
     /// Predecrement
-    bidirectional_list_iterator &operator--()
+    list_iterator &operator--()
     {
         node = node->prev;
         return *this;
     }
     /// Postdecrement
-    bidirectional_list_iterator operator--(int)
+    list_iterator operator--(int)
     {
         auto result(*this);
         node = node->prev;
         return result;
     }
-    /// Dereferentiation
-    const T &operator*() const { return node->data; }
-    /// Dereferentiation
-    T &operator*() { return node->data; }
-    /// Member access operator
-    const Node<T> *operator->() { return node; }
-    /// Equality operator
-    bool operator==(bidirectional_list_iterator rhs) const { return node == rhs.node; }
-    /// Inequality operator
-    bool operator!=(bidirectional_list_iterator rhs)  const { return node != rhs.node; }
+
+    T operator*() const { return node->data; } /// Dereferentiation
+    T &operator*() { return node->data; }      /// Dereferentiation
+
+    Node<T> *operator->() { return node; }                                /// Member access operator
+    bool operator==(const list_iterator& a) const { return node == a.node; } /// Equality operator
+    bool operator!=(const list_iterator& a) const { return node != a.node; } /// Inequality operator
+
+    friend class List<T>;
 };
+
 template <typename T>
 /// List class
 class List
 {
-    /// Head of list
     Node<T> *_head;
-    /// Tail of list
     Node<T> *_tail;
-    /// Past-the-end Node
-    Node<T> *_void;
-    /// Size of list
-    size_t _size;
+    Node<T> *_void; /// Past-the-end Node
+    size_t _size;   /// Size of list
 
 public:
-    /// \return 'true' if list is empty
-    bool empty() const noexcept { return _size == 0 ? true : false; }
-    /// \return Size of list
-    size_t size() const noexcept { return _size; }
+    using const_iterator = const list_iterator<T>;
+    using iterator = list_iterator<T>;
+
+    bool empty() const noexcept { return _size == 0 ? true : false; } /// \return 'true' if list is empty
+    size_t size() const noexcept { return _size; }                    /// \return Size of list
+
     /// Default constructor
-    List() : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0) {}
+    List() : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
+    {
+        std::cout << "Default constructor!" << std::endl;
+        _void->next = _void;
+        _void->prev = _void;
+    }
     /// Size constructor \param[in] new_size New size of list
     List(size_t new_size) : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        while (_size != new_size)
-            insert(end(), T());
+        std::cout << "Size constructor!" << std::endl;
+        _void->next = _void;
+        _void->prev = _void;
+
+        resize(new_size);
     }
     /// Copy constructor \param[in] a List
     List(const List<T> &a) : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        for (size_t i = 0; i < a.size(); i++)
-            insert(end(), a[i]);
+        std::cout << "Copy constructor!" << std::endl;
+        _void->next = _void;
+        _void->prev = _void;
+
+        for (auto tmp = a.begin(); tmp != a.end(); tmp++)
+            insert(end(), *tmp);
     }
     /// Move constructor \param[in] a List
-    List(List &&a) : _void(new Node<T>(T(), nullptr, nullptr))
+    List(List &&a) : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        std::swap(_head, a._head);
-        std::swap(_tail, a._tail);
-        std::swap(_size, a._size);
+        std::cout << "Move constructor!" << std::endl;
+        _void->next = _void;
+        _void->prev = _void;
+
+        swap(a);
     }
     /// Assign copy operator \param[in] a List
     List<T> &operator=(const List<T> &a)
     {
+        std::cout << "Copy assignment!" << std::endl;
         clear();
         _void = new Node<T>(T(), nullptr, nullptr);
-        for (size_t i = 0; i < a.size(); i++)
-            insert(end(), a[i]);
+        _void->next = _void;
+        _void->prev = _void;
+
+        for (auto tmp = a.begin(); tmp != a.end(); tmp++)
+            insert(end(), *tmp);
+        return *this;
     }
     /// Assign move operator \param[in] a List
     List<T> &operator=(List<T> &&a)
     {
-        std::swap(_head, a._head);
-        std::swap(_tail, a._tail);
-        std::swap(_size, a._size);
+        std::cout << "Move assignment!" << std::endl;
+        clear();
+        _void = new Node<T>(T(), nullptr, nullptr);
+        _void->next = _void;
+        _void->prev = _void;
+
+        swap(a);
+        return *this;
     }
     /// Destructor
-    ~List() { clear(); }
+    ~List()
+    {
+        std::cout << "Destructor!" << std::endl;
+        clear();
+    }
+
     /// Swap \param[in, out] a List
     void swap(List<T> &a)
     {
@@ -134,8 +155,17 @@ public:
     /// Clear the list
     void clear()
     {
-        while (_size != 0)
-            erase(begin());
+        Node<T> *tmp = _head;
+        if (_size != 0)
+        {
+            while (_head != _void)
+            {
+                tmp = _head;
+                _head = _head->next;
+                delete tmp;
+            }
+            _size = 0;
+        }
         _head = nullptr;
         _tail = nullptr;
         delete _void;
@@ -151,7 +181,7 @@ public:
         Node<T> *tmp = _head;
         for (size_t i = 0; i != index; i++)
             tmp = tmp->next;
-        return tmp->_data;
+        return tmp->data;
     }
     /**
      * Access operator
@@ -164,19 +194,22 @@ public:
         Node<T> *tmp = _head;
         for (size_t i = 0; i != index; i++)
             tmp = tmp->next;
-        return tmp->_data;
+        return tmp->data;
     }
+
     /// \return Constant begin iterator
-    const bidirectional_list_iterator<T> begin() const noexcept { return bidirectional_list_iterator<T>(_head); }
+    const_iterator begin() const noexcept { return list_iterator<T>(_head); }
     /// \return Constant past-the-end iterator
-    const bidirectional_list_iterator<T> end() const noexcept { return bidirectional_list_iterator<T>(_void); }
+    const_iterator end() const noexcept { return list_iterator<T>(_void); }
     /// \return Begin iterator
-    bidirectional_list_iterator<T> begin() noexcept { return bidirectional_list_iterator<T>(_head); }
+    iterator begin() noexcept { return list_iterator<T>(_head); }
     /// \return Past-the-end iterator
-    bidirectional_list_iterator<T> end() noexcept { return bidirectional_list_iterator<T>(_void); }
+    iterator end() noexcept { return list_iterator<T>(_void); }
+
     /// Insert method
-    const bidirectional_list_iterator<T> insert(const bidirectional_list_iterator<T>& pos, const T &data)
+    const_iterator insert(const list_iterator<T> &pos, const T &data)
     {
+        std::cout << "Insert " << data << std::endl;
         if (_size == 0)
         {
             _head = new Node<T>(data, _void, _void);
@@ -185,44 +218,60 @@ public:
         else if (pos == begin())
         {
             Node<T> *tmp = new Node<T>(data, _void, _head);
-            _head->prev = tmp;
+            tmp->next->prev = tmp;
             _head = tmp;
         }
         else if (pos == end())
         {
             Node<T> *tmp = new Node<T>(data, _tail, _void);
-            _tail->next = tmp;
+            tmp->prev->next = tmp;
             _tail = _tail->next;
         }
         else
-            throw "Incorrect parameter 'pos' in method 'insert'!";
+        {
+            Node<T> *tmp = new Node<T>(data, pos.node->prev, pos.node);
+            tmp->next->prev = tmp;
+            tmp->prev->next = tmp;
+        }
         _size += 1;
-        return pos;
+        return list_iterator<T>(pos.node->prev);
     }
     /// Erase method
-    const bidirectional_list_iterator<T> erase(const bidirectional_list_iterator<T>& pos)
+    const_iterator erase(const list_iterator<T> &pos)
     {
-        if (size == 1)
+        std::cout << "Erase " << pos.node->data << std::endl;
+        Node<T> *ret;
+        if (_size == 1)
         {
             delete _head;
             _head = nullptr;
             _tail = nullptr;
+            ret = nullptr;
         }
-        if (pos == begin())
+        else if (pos == begin())
         {
             _head = _head->next;
             delete _head->prev;
             _head->prev = _void;
+            ret = _head;
         }
-        if (pos == end())
+        else if (pos == end())
         {
             _tail = _tail->prev;
             delete _tail->next;
             _tail->next = _void;
+            ret = _tail;
         }
         else
-            throw "Incorrect parameter 'pos' in method 'insert'!";
+        {
+            Node<T> *tmp = pos.node;
+            ret = tmp->next;
+            tmp->next->prev = tmp->prev;
+            tmp->prev->next = tmp->next;
+            delete tmp;
+        }
         _size -= 1;
+        return list_iterator<T>(ret);
     }
     /**
      * Change size of List
@@ -230,26 +279,15 @@ public:
      */
     void resize(size_t new_size)
     {
+        std::cout << "Resize " << _size << " -> " << new_size << std::endl;
         if (new_size > 10000000)
-            throw "MemoryError: Over 10000000 bytes memory requested!";
-        else if (new_size > _size)
-        {
+            throw "MemoryError: Too many memory requested!";
+        
+        if (new_size > _size)
             for (size_t i = 0; i < new_size - _size; i++)
                 insert(end(), T());
-        }
-        else if (new_size < _size)
-        {
+        else if (_size > new_size)
             for (size_t i = 0; i < _size - new_size; i++)
-                    erase(end());
-        }
-    }
-    /// Output method
-    void output()
-    {
-        Node<T>* tmp = _head;
-        std::cout << "[";
-        for (; tmp->next != _void; tmp = tmp->next)
-            std::cout << *tmp << ", ";
-        std::cout << *tmp << "]" << std::endl;
+                erase(end());
     }
 };
