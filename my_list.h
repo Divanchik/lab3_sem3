@@ -1,7 +1,3 @@
-/**
- * \file
- * List container
- */
 #pragma once
 
 template <typename T>
@@ -24,40 +20,34 @@ class list_iterator
 public:
     list_iterator() : node(nullptr) {}                   /// Default constructor
     list_iterator(Node<T> *new_node) : node(new_node) {} /// Constructor
-    ~list_iterator() {}                                  /// Destructor
-    /// Preincrenment
-    list_iterator &operator++()
+    ~list_iterator() {}
+    list_iterator &operator++() /// Preincrenment
     {
         node = node->next;
         return *this;
     }
-    /// Postincrement
-    list_iterator operator++(int)
+    list_iterator operator++(int) /// Postincrement
     {
         auto result(*this);
         node = node->next;
         return result;
     }
-    /// Predecrement
-    list_iterator &operator--()
+    list_iterator &operator--() /// Predecrement
     {
         node = node->prev;
         return *this;
     }
-    /// Postdecrement
-    list_iterator operator--(int)
+    list_iterator operator--(int) /// Postdecrement
     {
         auto result(*this);
         node = node->prev;
         return result;
     }
-
-    T operator*() const { return node->data; } /// Dereferentiation
-    T &operator*() { return node->data; }      /// Dereferentiation
-
-    Node<T> *operator->() { return node; }                                /// Member access operator
-    bool operator==(const list_iterator& a) const { return node == a.node; } /// Equality operator
-    bool operator!=(const list_iterator& a) const { return node != a.node; } /// Inequality operator
+    T operator*() const { return node->data; }                               /// Dereferentiation
+    T &operator*() { return node->data; }                                    /// Dereferentiation
+    Node<T> *operator->() { return node; }                                   /// Member access operator
+    bool operator==(const list_iterator &a) const { return node == a.node; } /// Equality operator
+    bool operator!=(const list_iterator &a) const { return node != a.node; } /// Inequality operator
 
     friend class List<T>;
 };
@@ -71,6 +61,8 @@ class List
     Node<T> *_void; /// Past-the-end Node
     size_t _size;   /// Size of list
 
+    void log(const char *message) { std::cout << message << std::endl; }
+
 public:
     using const_iterator = const list_iterator<T>;
     using iterator = list_iterator<T>;
@@ -81,14 +73,14 @@ public:
     /// Default constructor
     List() : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        std::cout << "Default constructor!" << std::endl;
+        log("Default constructor!");
         _void->next = _void;
         _void->prev = _void;
     }
     /// Size constructor \param[in] new_size New size of list
     List(size_t new_size) : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        std::cout << "Size constructor!" << std::endl;
+        log("Size constructor!");
         _void->next = _void;
         _void->prev = _void;
 
@@ -97,17 +89,21 @@ public:
     /// Copy constructor \param[in] a List
     List(const List<T> &a) : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        std::cout << "Copy constructor!" << std::endl;
+        log("Copy constructor!");
         _void->next = _void;
         _void->prev = _void;
 
-        for (auto tmp = a.begin(); tmp != a.end(); tmp++)
+        auto tmp = a.begin();
+        for (size_t i=0;i<a.size();i++)
+        {
             insert(end(), *tmp);
+            tmp++;
+        }
     }
     /// Move constructor \param[in] a List
     List(List &&a) : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
     {
-        std::cout << "Move constructor!" << std::endl;
+        log("Move constructor!");
         _void->next = _void;
         _void->prev = _void;
 
@@ -116,20 +112,24 @@ public:
     /// Assign copy operator \param[in] a List
     List<T> &operator=(const List<T> &a)
     {
-        std::cout << "Copy assignment!" << std::endl;
+        log("Copy assignment!");
         clear();
         _void = new Node<T>(T(), nullptr, nullptr);
         _void->next = _void;
         _void->prev = _void;
 
-        for (auto tmp = a.begin(); tmp != a.end(); tmp++)
+        auto tmp = a.begin();
+        for (size_t i=0;i<a.size();i++)
+        {
             insert(end(), *tmp);
+            tmp++;
+        }
         return *this;
     }
     /// Assign move operator \param[in] a List
     List<T> &operator=(List<T> &&a)
     {
-        std::cout << "Move assignment!" << std::endl;
+        log("Move assignment!");
         clear();
         _void = new Node<T>(T(), nullptr, nullptr);
         _void->next = _void;
@@ -141,13 +141,14 @@ public:
     /// Destructor
     ~List()
     {
-        std::cout << "Destructor!" << std::endl;
+        log("Destructor!");
         clear();
     }
 
     /// Swap \param[in, out] a List
     void swap(List<T> &a)
     {
+        log("Swap!");
         std::swap(_head, a._head);
         std::swap(_tail, a._tail);
         std::swap(_size, a._size);
@@ -155,15 +156,19 @@ public:
     /// Clear the list
     void clear()
     {
+        log("Clear!");
+        std::cout << "\\Initial size: " << _size << std::endl;
         Node<T> *tmp = _head;
         if (_size != 0)
         {
-            while (_head != _void)
+            while (_head != _tail)
             {
                 tmp = _head;
                 _head = _head->next;
+                std::cout << " |delete " << tmp->data << std::endl;
                 delete tmp;
             }
+            delete _head;
             _size = 0;
         }
         _head = nullptr;
@@ -209,7 +214,7 @@ public:
     /// Insert method
     const_iterator insert(const list_iterator<T> &pos, const T &data)
     {
-        std::cout << "Insert " << data << std::endl;
+        std::cout << "Insert " << data;
         if (_size == 0)
         {
             _head = new Node<T>(data, _void, _void);
@@ -234,12 +239,13 @@ public:
             tmp->prev->next = tmp;
         }
         _size += 1;
+        std::cout << " " << _size << std::endl;
         return list_iterator<T>(pos.node->prev);
     }
     /// Erase method
     const_iterator erase(const list_iterator<T> &pos)
     {
-        std::cout << "Erase " << pos.node->data << std::endl;
+        std::cout << "Erase " << pos.node->data;
         Node<T> *ret;
         if (_size == 1)
         {
@@ -271,6 +277,7 @@ public:
             delete tmp;
         }
         _size -= 1;
+        std::cout << " " << _size << std::endl;
         return list_iterator<T>(ret);
     }
     /**
@@ -282,12 +289,12 @@ public:
         std::cout << "Resize " << _size << " -> " << new_size << std::endl;
         if (new_size > 10000000)
             throw "MemoryError: Too many memory requested!";
-        
-        if (new_size > _size)
-            for (size_t i = 0; i < new_size - _size; i++)
-                insert(end(), T());
-        else if (_size > new_size)
-            for (size_t i = 0; i < _size - new_size; i++)
+        while (_size != new_size)
+        {
+            if (_size > new_size)
                 erase(end());
+            else if (new_size > _size)
+                insert(end(), T());
+        }
     }
 };

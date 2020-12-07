@@ -12,13 +12,14 @@ template <typename T>
 using CollectionType = List<T>;
 using collection = CollectionType<int>;
 
-void print_container(collection a)
+void print_container(collection& a, const char* name)
 {
-    std::cout << "[ ";
+    std::cout << name << " == [ ";
     auto tmp = a.begin();
-    std::cout << tmp->data;
-    // for (; tmp!=a.end(); tmp++)
-    //     std::cout << *tmp << ", ";
+    for (size_t i = 0; i < a.size(); i++, tmp++)
+    {
+        std::cout << *tmp << ", ";
+    }
     std::cout << *tmp << " ]" << std::endl;
 }
 void flag(const char *message) { std::cout << message << std::endl; }
@@ -30,13 +31,14 @@ int main()
     {
 
         collection a;
-        flag("#1");
         collection b(10);
-        flag("#2");
+        flag("#1");
         auto tmp = b.begin();
-        flag("#3");
         for (int i = 0; i < 10; i++, tmp++)
+        {
             *tmp = i * i;
+            std::cout << "b[" << i << "] = " << *tmp << std::endl;
+        } 
         flag("#4");
         a = b;
         flag("#5");
@@ -46,11 +48,11 @@ int main()
         flag("#7");
         // print_container(a);
         // b.erase(b.begin());
-        print_container(b);
+        print_container(b, "b");
         c.erase(c.begin());
         c.erase(c.begin());
-        print_container(c);
-        print_container(d);
+        print_container(c, "c");
+        print_container(d, "d");
         return 0;
     }
     catch (const char *message)
