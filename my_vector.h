@@ -1,7 +1,3 @@
-/**
- * \file
- * Vector container
- */
 #pragma once
 
 template <typename T>
@@ -14,6 +10,8 @@ class Vector
     /// Size of actual space
     size_t _capacity;
 
+    void log(const char *message) { std::cout << message << std::endl; }
+
 public:
     using iterator = T *;
     using const_iterator = const T *;
@@ -24,20 +22,20 @@ public:
     size_t size() const noexcept { return _size; }
 
     /// Default constructor
-    Vector() : _data(nullptr), _size(0), _capacity(0) {}
+    Vector() : _data(nullptr), _size(0), _capacity(0) {log("Default constructor!");}
     /// Size constructor \param[in] new_size New size of array
-    Vector(size_t new_size) : _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) {}
+    Vector(size_t new_size) : _data(new T[new_size + 1]), _size(new_size), _capacity(new_size + 1) {log("Size constructor!");}
     /// Copy constructor \param[in] a Vector
     Vector(const Vector<T> &a) : _data(new T[a._capacity]), _size(a._size), _capacity(a._capacity)
     {
-        std::cout << "Copy constructor!" << std::endl;
+        log("Copy constructor!");
         for (size_t i = 0; i < _size; ++i)
             _data[i] = a[i];
     }
     /// Move constructor \param[in] a Vector
     Vector(Vector<T> &&a) noexcept : _data(a._data), _size(a._size), _capacity(a._capacity)
     {
-        std::cout << "Move constructor!" << std::endl;
+        log("Move constructor!");
         a._data = nullptr;
         a._size = 0;
         a._capacity = 0;
@@ -45,7 +43,7 @@ public:
     /// Assign copy operator \param[in] a Vector
     Vector<T> &operator=(const Vector<T> &a)
     {
-        std::cout << "Copy assign!" << std::endl;
+        log("Copy assignment!");
         Vector<T> tmp(a);
         swap(tmp);
         return *this;
@@ -53,7 +51,7 @@ public:
     /// Assign move operator \param[in] a Vector
     Vector<T> &operator=(Vector<T> &&a) noexcept
     {
-        std::cout << "Move assign!" << std::endl;
+        log("Move assignment!");
         swap(a);
         a._data = nullptr;
         a._size = 0;
@@ -63,13 +61,13 @@ public:
     /// Destructor
     ~Vector()
     {
-        std::cout << "Destructor!" << std::endl;
+        log("Destructor!");
         delete[] _data;
     }
     /// Swap \param[in, out] a Vector
     void swap(Vector<T> &a) noexcept
     {
-        std::cout << "Swap!" << std::endl;
+        log("Swap!");
         std::swap(_data, a._data);
         std::swap(_size, a._size);
         std::swap(_capacity, a._capacity);
@@ -77,6 +75,7 @@ public:
     /// Clear the vector
     void clear() noexcept
     {
+        log("Clear!");
         if (_capacity == 0)
             return;
         delete[] _data;
@@ -117,6 +116,7 @@ public:
     /// Insert method
     iterator insert(const_iterator pos, const T &value)
     {
+        std::cout << "Insert " << value << " " << pos - (const_iterator)_data << std::endl;
         if (pos == end())
         {
             std::cout << "Inserting element in the end!" << std::endl;
@@ -137,6 +137,7 @@ public:
     /// Erase method
     iterator erase(const_iterator pos)
     {
+        log("Erase!");
         if (pos == end())
         {
             _data[_size] = 0;
@@ -155,9 +156,9 @@ public:
      */
     void resize(size_t new_size)
     {
+        std::cout << "Resize " << _size << " -> " << new_size << std::endl;
         if (new_size > 10000000)
             throw "MemoryError: Too many memory requested!";
-        std::cout << "Resize from " << _size << " to " << new_size << "!" << std::endl;
         if (empty())
         {
             _capacity = new_size + 100;

@@ -67,8 +67,8 @@ public:
     using const_iterator = const list_iterator<T>;
     using iterator = list_iterator<T>;
 
-    bool empty() const noexcept { return _size == 0 ? true : false; } /// \return 'true' if list is empty
-    size_t size() const noexcept { return _size; }                    /// \return Size of list
+    bool empty() const noexcept { return _size == 0 ? true : false; }
+    size_t size() const noexcept { return _size; }
 
     /// Default constructor
     List() : _head(nullptr), _tail(nullptr), _void(new Node<T>(T(), nullptr, nullptr)), _size(0)
@@ -83,7 +83,6 @@ public:
         log("Size constructor!");
         _void->next = _void;
         _void->prev = _void;
-
         resize(new_size);
     }
     /// Copy constructor \param[in] a List
@@ -106,7 +105,6 @@ public:
         log("Move constructor!");
         _void->next = _void;
         _void->prev = _void;
-
         swap(a);
     }
     /// Assign copy operator \param[in] a List
